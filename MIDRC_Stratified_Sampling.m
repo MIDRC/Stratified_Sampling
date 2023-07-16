@@ -18,6 +18,12 @@ end
 prompt = 'Input filename: ';
 filename = input(prompt,'s');
 
+prompt = 'Assume single-site data? (y/n): ';
+site_toggle = input(prompt,'s');
+if isempty(site_toggle)
+    site_toggle = "n";
+end
+
 % Verify fields read in with correct data type
 inputfile = filepath + string(filename);
 opts = detectImportOptions(inputfile);
@@ -67,11 +73,15 @@ end
 
 %% Create site ID variable
 
-data.site_id(:) = "Undefined";
+data.site_id(:) = 0;
 
 for i = 1:height(data)
-    temp = strsplit(data.submitter_id{i},'-');
-    data.site_id(i) = string(temp{1});
+    if strcmp(site_toggle,"y")
+
+    else
+        temp = strsplit(data.submitter_id{i},'-');
+        data.site_id(i) = string(temp{1});
+    end
 end
 
 %% Data types (cell --> string)
@@ -140,7 +150,7 @@ sites = groupcounts(data, 'site_id');
 datasave = data;
 
 % Initialize seed
-seed = 10;
+seed = 1;
 rng(seed)
 
 %% Split for each site
@@ -256,7 +266,7 @@ writetable(FinalTable,"COMPLETED_" + filename(1:end-dateEnd) + ".csv")
 % One per batch
 
     % Filename "MIDRC_sequestration_data_<recieved date>_<site_id>_<date ran>.xlsx"
-    evalsheet = "Evaluation_" + filename(1:end-dateEnd) +".xlsx";
+    evalsheet = "Evaluation_" + filename(1:end-dateEnd) +"_0716.xlsx";
     copyfile("Blank_Evaluation_Spreadsheet.xlsx", evalsheet)
     
     InputTable = FinalTable;
