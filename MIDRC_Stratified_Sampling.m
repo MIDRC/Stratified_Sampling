@@ -1,6 +1,7 @@
 %% Stratified sampling algorithim
 % Separate an incoming data batch into open and sequestered using
 % stratified sampling
+% Developed on MATLAB 2022b
 % Author: Natalie Baughan, MIDRC TDP 3d
 % Contact: nbaughan@uchicago.edu
 % Date: May 2023
@@ -266,7 +267,7 @@ writetable(FinalTable,"COMPLETED_" + filename(1:end-dateEnd) + ".csv")
 % One per batch
 
     % Filename "MIDRC_sequestration_data_<recieved date>_<site_id>_<date ran>.xlsx"
-    evalsheet = "Evaluation_" + filename(1:end-dateEnd) +"_0716.xlsx";
+    evalsheet = "Evaluation_" + filename(1:end-dateEnd) +".xlsx";
     copyfile("Blank_Evaluation_Spreadsheet.xlsx", evalsheet)
     
     InputTable = FinalTable;
